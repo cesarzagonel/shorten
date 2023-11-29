@@ -10,6 +10,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import currentUser from "@/helpers/currentUser";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,7 +41,7 @@ export default async function RootLayout({
               alignItems={"center"}
               paddingX={4}
             >
-              <Box>Short</Box>
+              <Link href={"/"}>Short</Link>
               <Box flexGrow={1}></Box>
 
               {user && (

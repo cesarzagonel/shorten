@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardBody,
+  CircularProgress,
   FormErrorMessage,
   Input,
   Stack,
@@ -81,7 +82,20 @@ export default function Login() {
                 </FormErrorMessage>
               </FormControl>
 
-              <Button type="submit" colorScheme="blue">
+              <Button
+                type="submit"
+                colorScheme="blue"
+                disabled={loginMutation.isLoading}
+                rightIcon={
+                  loginMutation.isLoading ? (
+                    <CircularProgress
+                      size={4}
+                      isIndeterminate
+                      color="orange.400"
+                    />
+                  ) : undefined
+                }
+              >
                 Login
               </Button>
             </Stack>

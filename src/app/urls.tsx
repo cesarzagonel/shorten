@@ -64,6 +64,7 @@ export default function Urls({
               size="sm"
               onClick={async () => {
                 await shortenMutation.mutateAsync(url);
+                setUrl("");
                 router.refresh();
               }}
             >
