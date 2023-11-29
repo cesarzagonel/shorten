@@ -6,19 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@prisma/client": "^5.6.0",
+    "bcrypt": "^5.1.1",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.5",
+    "nanoid": "^5.0.3",
+    "next": "14.0.2",
     "react": "^18",
+    "react-charts": "^3.0.0-beta.57",
     "react-dom": "^18",
-    "next": "14.0.2"
+    "react-hook-form": "^7.48.2",
+    "react-query": "^3.39.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/request-ip": "^0.0.41",
     "eslint": "^8",
-    "eslint-config-next": "14.0.2"
+    "eslint-config-next": "14.0.2",
+    "prisma": "^5.6.0",
+    "typescript": "^5"
   }
 }
