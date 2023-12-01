@@ -4,7 +4,7 @@ import { MINUTE_S } from "./time";
 
 const ipRateLimit = <T, A extends unknown[]>(
   key: string,
-  fn: (...args: A) => T
+  fn: (...args: A) => Promise<T>
 ) =>
   rateLimit(
     MINUTE_S,

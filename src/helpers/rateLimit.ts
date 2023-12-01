@@ -4,7 +4,7 @@ export default function rateLimit<T, A extends unknown[]>(
   expire: number,
   limit: number,
   getKey: (...args: A) => string,
-  fn: (...args: A) => T,
+  fn: (...args: A) => Promise<T>,
   message: string = "Too many requests. Please try again later."
 ): (...args: A) => Promise<T> {
   return async function (...args) {
