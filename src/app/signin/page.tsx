@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CircularProgress,
+  FormErrorMessage,
   Input,
   Stack,
 } from "@chakra-ui/react";
@@ -33,8 +34,6 @@ export default function Login() {
     return result;
   });
 
-  const isInvalid = mutation.data && "error" in mutation.data;
-
   return (
     <Box
       flexGrow={1}
@@ -46,7 +45,7 @@ export default function Login() {
         <CardBody>
           <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
             <Stack spacing={4}>
-              <FormControl isInvalid={isInvalid}>
+              <FormControl isInvalid={Boolean(mutation.error)}>
                 <FormLabel>E-mail</FormLabel>
                 <Input
                   type="email"
@@ -54,6 +53,12 @@ export default function Login() {
                     required: "E-mail is required",
                   })}
                 />
+
+                {mutation.error instanceof Error ? (
+                  <FormErrorMessage>{mutation.error.message}</FormErrorMessage>
+                ) : (
+                  <></>
+                )}
               </FormControl>
 
               <Button

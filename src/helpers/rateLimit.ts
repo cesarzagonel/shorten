@@ -1,25 +1,25 @@
-import { LRUCache } from "lru-cache";
+import getRedis from "@/redis";
 
-export default function rateLimit(
-  ttl: number,
+export default function rateLimit<T, A extends unknown[]>(
+  expire: number,
   limit: number,
-  getKey: () => string,
-  fn: Function
-) {
-  const tokenCache = new LRUCache({
-    max: 500,
-    ttl: ttl,
-  });
+  getKey: (...args: A) => string,
+  fn: (...args: A) => T,
+  message: string = "Too many requests. Please try again later."
+): (...args: A) => Promise<T> {
+  return async function (...args) {
+    const redis = await getRedis();
+    const key = getKey.apply(null, args);
+    const count = await redis.incr(key);
 
-  return function () {
-    const key = getKey();
-    let tokenCount = (tokenCache.get(key) as number) || 0;
-    tokenCache.set(key, ++tokenCount);
-
-    if (tokenCount >= limit) {
-      throw new Error("Rate limited");
+    if (count == 1) {
+      redis.expire(key, expire);
     }
 
-    return fn.apply(null, arguments);
+    if (count > limit) {
+      throw new Error(message);
+    }
+
+    return await fn.apply(null, args);
   };
 }

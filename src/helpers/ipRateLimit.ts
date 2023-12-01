@@ -1,10 +1,17 @@
 import { headers } from "next/headers";
 import rateLimit from "@/helpers/rateLimit";
+import { MINUTE_S } from "./time";
 
-export const ipRateLimit = (fn: Function) =>
+const ipRateLimit = <T, A extends unknown[]>(
+  key: string,
+  fn: (...args: A) => T
+) =>
   rateLimit(
-    60_000,
-    60,
-    () => headers().get("x-forwarded-for")?.split(",").shift() || "::1",
+    MINUTE_S,
+    120,
+    (..._args: A) =>
+      key + "_" + headers().get("x-forwarded-for")?.split(",").shift() || "::1",
     fn
   );
+
+export default ipRateLimit;

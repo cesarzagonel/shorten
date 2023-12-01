@@ -47,7 +47,7 @@ export default function ShortenBar({ showLabel }: { showLabel?: boolean }) {
           {shortenMutation.isLoading ? (
             <CircularProgress size={18} isIndeterminate />
           ) : (
-            "Shorten"
+            "Create"
           )}
         </Button>
       </HStack>

@@ -43,7 +43,7 @@ export default async function RootLayout({
                 {children}
               </Container>
 
-              <Box>
+              <Box backgroundColor={"white"}>
                 <Box
                   display={"flex"}
                   alignItems={"center"}
@@ -69,7 +69,7 @@ export default async function RootLayout({
                     >
                       <Image
                         style={{ position: "relative", top: 4 }}
-                        src="github.svg"
+                        src="/github.svg"
                         alt="GitHub"
                         width={20}
                         height={20}

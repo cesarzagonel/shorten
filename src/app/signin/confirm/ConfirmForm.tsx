@@ -7,6 +7,7 @@ import {
   CardBody,
   CircularProgress,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Stack,
@@ -57,7 +58,7 @@ export default function ConfirmForm({
                 it in the field below.
               </Text>
 
-              <FormControl>
+              <FormControl isInvalid={Boolean(mutation.error)}>
                 <FormLabel>OTP</FormLabel>
                 <Input
                   type="text"
@@ -65,6 +66,12 @@ export default function ConfirmForm({
                     required: true,
                   })}
                 />
+
+                {mutation.error instanceof Error ? (
+                  <FormErrorMessage>{mutation.error.message}</FormErrorMessage>
+                ) : (
+                  <></>
+                )}
               </FormControl>
 
               <Button

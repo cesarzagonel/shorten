@@ -46,3 +46,11 @@ model Visit {
   url       Url      @relation(fields: [urlId], references: [id])
   createdAt DateTime @default(now())
 }
+
+model Job {
+  id        Int      @id @default(autoincrement())
+  task      String
+  payload   Json
+  tries     Int      @default(0)
+  createdAt DateTime @default(now())
+}
