@@ -46,7 +46,7 @@ export default function Login() {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Card w={500}>
+        <Card maxW={500} flexGrow={1}>
           <CardHeader>
             <Heading size="md">Sign In / Sign Up</Heading>
           </CardHeader>

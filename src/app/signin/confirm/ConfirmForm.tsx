@@ -51,7 +51,7 @@ export default function ConfirmForm({
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <Card w={500}>
+      <Card maxW={500} flexGrow={1}>
         <CardHeader>
           <Heading size="md">Sign In / Sign Up</Heading>
         </CardHeader>
@@ -60,7 +60,8 @@ export default function ConfirmForm({
           <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
             <Stack spacing={4}>
               <Text>
-                We sent a six digit code to <strong>{email}</strong>, enter the code on the field below:
+                We sent a six digit code to <strong>{email}</strong>, enter the
+                code on the field below:
               </Text>
 
               <FormControl isInvalid={Boolean(mutation.error)}>
