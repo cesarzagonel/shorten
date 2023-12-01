@@ -16,7 +16,6 @@ export default function rateLimit(
     let tokenCount = (tokenCache.get(key) as number) || 0;
     tokenCache.set(key, ++tokenCount);
 
-    console.log(tokenCount);
     if (tokenCount >= limit) {
       throw new Error("Rate limited");
     }
