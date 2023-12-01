@@ -1,3 +1,5 @@
+import prisma from "@/prisma";
+
 export default class VisitRepository {
   static async visitsByCountryForUrl(urlId: string) {
     const result: { count: BigInt; country: string }[] =

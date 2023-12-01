@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "dotenv -e .env.local prisma generate && next build && dotenv -e .env.local prisma migrate deploy",
-    "start": "prisma migrate deploy && next start",
+    "start": "dotenv -e .env.local prisma migrate deploy && next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
     "background-dev": "nodemon -r tsconfig-paths/register background.ts",
