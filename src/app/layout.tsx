@@ -22,10 +22,10 @@ export default async function RootLayout({
   const user = await currentUser();
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" style={{ height: "100%" }}>
+      <body className={inter.className} style={{ height: '100%', display: "flex" }}>
         <Providers>
-          <Box display={"flex"} flexDirection={"column"} h={"100vh"}>
+          <Box display={"flex"} flexDirection={"column"} flexGrow={1}>
             <Navbar user={user} />
 
             <Box

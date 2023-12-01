@@ -4,7 +4,7 @@ import ShortenBar from "@/components/ShortenBar";
 import UrlList from "@/components/UrlList";
 import currentUser from "@/helpers/currentUser";
 import prisma from "@/prisma";
-import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -41,11 +41,12 @@ export default async function Home() {
           fontWeight={600}
           fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
           lineHeight={"110%"}
+          textAlign={"center"}
         >
-          Short URLs with statistics{" "}
           <Text as={"span"} color={"orange.400"}>
-            for free
-          </Text>
+            Free
+          </Text>{" "}
+          short URLs with statistics
         </Heading>
         <Text color={"gray.500"} maxW={"3xl"} textAlign={"center"}>
           Shorten and track with Shortim today! Experience the power of seamless
