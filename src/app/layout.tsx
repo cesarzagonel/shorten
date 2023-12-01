@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
-import { Box, Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import currentUser from "@/helpers/currentUser";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
@@ -10,8 +10,8 @@ import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Shortim",
-  description: "Shorten URLs for free",
+  title: "shortim.at",
+  description: "Free short URLs",
 };
 
 export default async function RootLayout({
