@@ -4,6 +4,8 @@ import { Providers } from "./providers";
 import { Box, Container } from "@chakra-ui/react";
 import currentUser from "@/helpers/currentUser";
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -58,7 +60,21 @@ export default async function RootLayout({
                     and{" "}
                     <a href="https://chakra-templates.dev/" target="_blank">
                       chakra-templates.dev
-                    </a>
+                    </a>{" "}
+                    -{" "}
+                    <Link
+                      href="https://github.com/cesarzagonel/shortim.at"
+                      target="_blank"
+                      style={{ display: "inline-block" }}
+                    >
+                      <Image
+                        style={{ position: "relative", top: 4 }}
+                        src="github.svg"
+                        alt="GitHub"
+                        width={20}
+                        height={20}
+                      />
+                    </Link>
                   </Box>
                 </Box>
               </Box>
