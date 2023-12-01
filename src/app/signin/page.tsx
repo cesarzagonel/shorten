@@ -6,46 +6,34 @@ import {
   Card,
   CardBody,
   CircularProgress,
-  FormErrorMessage,
   Input,
   Stack,
 } from "@chakra-ui/react";
 import { FormControl, FormLabel } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { login } from "../actions";
 import { useRouter } from "next/navigation";
+import { otpRequest } from "@/server/otpRequest";
 
 interface LoginForm {
   email: string;
-  password: string;
 }
 
 export default function Login() {
   const router = useRouter();
+  const { register, handleSubmit } = useForm<LoginForm>();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginForm>();
+  const mutation = useMutation(async (data: LoginForm) => {
+    const result = await otpRequest(data.email);
 
-  const loginMutation = useMutation(async (data: LoginForm) => {
-    const result = await login(data);
-
-    if (result.success) {
-      console.log("redirect");
-      router.push("/");
+    if ("id" in result) {
+      router.push(`/signin/confirm?id=${result.id}`);
     }
 
     return result;
   });
 
-  async function onSubmit(data: LoginForm) {
-    loginMutation.mutate(data);
-  }
-
-  const isInvalid = loginMutation.data && !loginMutation.data?.success;
+  const isInvalid = mutation.data && "error" in mutation.data;
 
   return (
     <Box
@@ -56,7 +44,7 @@ export default function Login() {
     >
       <Card w={400}>
         <CardBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
             <Stack spacing={4}>
               <FormControl isInvalid={isInvalid}>
                 <FormLabel>E-mail</FormLabel>
@@ -68,26 +56,12 @@ export default function Login() {
                 />
               </FormControl>
 
-              <FormControl isInvalid={isInvalid}>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                />
-
-                <FormErrorMessage>
-                  E-mail or password does not match.
-                </FormErrorMessage>
-              </FormControl>
-
               <Button
                 type="submit"
                 colorScheme="blue"
-                disabled={loginMutation.isLoading}
+                disabled={mutation.isLoading}
                 rightIcon={
-                  loginMutation.isLoading ? (
+                  mutation.isLoading ? (
                     <CircularProgress
                       size={4}
                       isIndeterminate
@@ -96,7 +70,7 @@ export default function Login() {
                   ) : undefined
                 }
               >
-                Login
+                Continue
               </Button>
             </Stack>
           </form>

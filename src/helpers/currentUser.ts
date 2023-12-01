@@ -1,4 +1,4 @@
-import prisma from "@/app/prisma";
+import prisma from "@/prisma";
 import { cookies } from "next/headers";
 
 export default async function currentUser() {

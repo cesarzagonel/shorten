@@ -2,9 +2,11 @@ import { Button, HStack } from "@chakra-ui/react";
 import Link from "next/link";
 
 export default function Pagination({
+  baseUrl,
   pages,
   currentPage,
 }: {
+  baseUrl: string;
   pages: number;
   currentPage: number;
 }) {
@@ -27,7 +29,7 @@ export default function Pagination({
     >
       <Button
         as={currentPage == 1 ? undefined : Link}
-        href={currentPage == 1 ? undefined : `/`}
+        href={currentPage == 1 ? undefined : baseUrl}
         colorScheme="teal"
         variant={currentPage == 1 ? undefined : "outline"}
       >
@@ -36,7 +38,7 @@ export default function Pagination({
 
       <Button
         as={currentPage == 1 ? undefined : Link}
-        href={currentPage == 1 ? undefined : `/?page=${prevPage}`}
+        href={currentPage == 1 ? undefined : `${baseUrl}?page=${prevPage}`}
         colorScheme="teal"
         variant={currentPage == 1 ? undefined : "outline"}
       >
@@ -52,7 +54,7 @@ export default function Pagination({
             <Button
               key={page}
               as={Link}
-              href={page == 0 ? "/" : `/?page=${page + 1}`}
+              href={page == 0 ? baseUrl : `${baseUrl}?page=${page + 1}`}
               colorScheme="teal"
               variant={page + 1 == currentPage ? undefined : "outline"}
             >
@@ -63,7 +65,7 @@ export default function Pagination({
 
       <Button
         as={currentPage == pages ? undefined : Link}
-        href={currentPage == pages ? undefined : `/?page=${nextPage}`}
+        href={currentPage == pages ? undefined : `${baseUrl}?page=${nextPage}`}
         colorScheme="teal"
         variant={currentPage == pages ? undefined : "outline"}
       >
@@ -71,7 +73,7 @@ export default function Pagination({
       </Button>
       <Button
         as={currentPage == pages ? undefined : Link}
-        href={currentPage == pages ? undefined : `/?page=${pages}`}
+        href={currentPage == pages ? undefined : `${baseUrl}?page=${pages}`}
         colorScheme="teal"
         variant={currentPage == pages ? undefined : "outline"}
       >

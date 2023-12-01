@@ -7,27 +7,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model url {
-  id     String  @id @db.VarChar
-  title  String
-  url    String
-  userId Int
-  user   user    @relation(fields: [userId], references: [id])
-  visits visit[]
+model Url {
+  id        String   @id @db.VarChar
+  title     String
+  url       String
+  session   String?
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  visits    Visit[]
+  createdAt DateTime @default(now())
 }
 
-model user {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  token    String?
-  urls     url[]
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  token     String?
+  urls      Url[]
+  createdAt DateTime @default(now())
+  otps      Otp[]
 }
 
-model visit {
+model Otp {
+  id        String   @id @db.VarChar
+  otp       String   @db.VarChar
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expireAt  DateTime
+  createdAt DateTime @default(now())
+}
+
+model Visit {
   id        Int      @id @default(autoincrement())
   ip        String   @db.VarChar(40)
+  country   String?
+  region    String?
+  city      String?
   urlId     String   @db.VarChar
-  url       url      @relation(fields: [urlId], references: [id])
+  url       Url      @relation(fields: [urlId], references: [id])
   createdAt DateTime @default(now())
 }

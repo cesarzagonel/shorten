@@ -1,4 +1,4 @@
-import prisma from "@/app/prisma";
+import prisma from "@/prisma";
 import {
   Box,
   Card,
@@ -11,15 +11,26 @@ import {
 import React from "react";
 import VisitsChart from "./VisitsChart";
 import { format, subDays } from "date-fns";
+import VisitsTable from "./VisitsTable";
+import VisitRepository from "@/repositories/VisitRepository";
+import currentUser from "@/helpers/currentUser";
+import { redirect } from "next/navigation";
 
 export default async function Details({
   params: { id },
 }: {
   params: { id: string };
 }) {
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/signin");
+  }
+
   const url = await prisma.url.findFirstOrThrow({
     where: {
       id,
+      userId: user.id,
     },
     include: {
       _count: {
@@ -28,18 +39,7 @@ export default async function Details({
     },
   });
 
-  const result = (await prisma.$queryRaw`select count(id) as visits, 
-    to_char("createdAt", 'YYYY-MM-DD') as "date"
-    from visit
-    group by "date"`) as {
-    date: string;
-    visits: bigint;
-  }[];
-
-  // const timeseries = result.map((visits) => ({
-  //   ...visits,
-  //   visits: Number(visits.visits),
-  // }));
+  const visitsByDay = await VisitRepository.visitsByDayForUrl(id);
 
   const now = new Date();
   const timeseries = [...Array(7)]
@@ -48,10 +48,12 @@ export default async function Details({
 
       return {
         date,
-        visits: Number(result.find((r) => r.date == date)?.visits || 0),
+        visits: Number(visitsByDay.find((r) => r.date == date)?.visits || 0),
       };
     })
     .reverse();
+
+  const visitsByCountry = await VisitRepository.visitsByCountryForUrl(id);
 
   return (
     <Container pt={4}>
@@ -86,6 +88,8 @@ export default async function Details({
               ]}
             />
           </Box>
+
+          <VisitsTable data={visitsByCountry} />
         </CardBody>
       </Card>
     </Container>

@@ -1,40 +1,71 @@
-import Urls from "./urls";
-import client from "./prisma";
-import { redirect } from "next/navigation";
+import HomeIllustration from "@/components/HomeIllustration";
+import ShortenBar from "@/components/ShortenBar";
+import UrlList from "@/components/UrlList";
 import currentUser from "@/helpers/currentUser";
-import Pagination from "@/components/Pagination";
+import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
-  const currentPage = Number(searchParams.page || "1");
-
+export default async function Home() {
   const user = await currentUser();
-  if (!user) {
-    redirect("/login");
+
+  if (user) {
+    redirect("/dashboard");
   }
 
-  const urlCount = await client.url.count({ where: { userId: user.id } });
-  const perPage = 10;
-  const pages = Math.ceil(urlCount / perPage);
-
-  const urls = await client.url.findMany({
-    where: { userId: user.id },
-    take: perPage,
-    skip: (currentPage - 1) * perPage,
-    include: {
-      _count: {
-        select: { visits: true },
+  const session = cookies().get("session")?.value;
+  const urls =
+    session &&
+    (await prisma.url.findMany({
+      where: {
+        session,
       },
-    },
-  });
+      include: {
+        _count: {
+          select: { visits: true },
+        },
+      },
+    }));
 
   return (
-    <>
-      <Urls urls={urls} />
-      <Pagination pages={pages} currentPage={currentPage} />
-    </>
+    <Stack
+      align={"center"}
+      spacing={{ base: 8, md: 10 }}
+      py={{ base: 20, md: 28 }}
+    >
+      <Heading
+        fontWeight={600}
+        fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
+        lineHeight={"110%"}
+      >
+        Short URLs with statistics{" "}
+        <Text as={"span"} color={"orange.400"}>
+          for free
+        </Text>
+      </Heading>
+      <Text color={"gray.500"} maxW={"3xl"} textAlign={"center"}>
+        Shorten and track with Shortim today! Experience the power
+        of seamless sharing and in-depth analytics. Get started now! 🚀
+      </Text>
+
+      <ShortenBar />
+
+      {urls && (
+        <>
+          <UrlList urls={urls} />
+          <Button as={Link} href={"/signin"}>
+            Login to see statistics
+          </Button>
+        </>
+      )}
+
+      <Flex w={"full"}>
+        <HomeIllustration
+          height={{ sm: "24rem", lg: "28rem" }}
+          mt={{ base: 12, sm: 16 }}
+        />
+      </Flex>
+    </Stack>
   );
 }

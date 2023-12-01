@@ -1,25 +1,30 @@
-import { redirect } from "next/navigation";
-import prisma from "../prisma";
 import { NextRequest } from "next/server";
+import { redirect } from "next/navigation";
+import prisma from "../../prisma";
+import geolocation from "@/services/geolocation";
+import { ipRateLimit } from "@/helpers/ipRateLimit";
 
-export async function GET(
-  request: NextRequest,
-  { params: { id } }: { params: { id: string } }
-) {
-  const ip = (request.headers.get("x-forwarded-for") ?? "127.0.0.1")
-    .split(",")
-    .shift();
+export const GET = ipRateLimit(
+  async (
+    request: NextRequest,
+    { params: { id } }: { params: { id: string } }
+  ) => {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",").shift() || "127.0.0.1";
 
-  const url = await prisma.url.findFirstOrThrow({
-    where: { id },
-  });
+    const url = await prisma.url.findFirstOrThrow({
+      where: { id },
+    });
 
-  await prisma.visit.create({
-    data: {
-      ip,
-      urlId: url.id,
-    },
-  });
+    await geolocation(ip);
 
-  redirect(url.url);
-}
+    await prisma.visit.create({
+      data: {
+        ip,
+        urlId: url.id,
+      },
+    });
+
+    redirect(url.url);
+  }
+);
