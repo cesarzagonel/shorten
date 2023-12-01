@@ -33,12 +33,12 @@ export default function UrlList({
 
           <CardBody pt={2}>
             <ChackraLink
-              href={`http://localhost:3000/${url.id}`}
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}/${url.id}`}
               display={"block"}
               color={"blue.600"}
               target="_blank"
             >
-              http://localhost:3000/{url.id}
+              {process.env.NEXT_PUBLIC_BASE_URL}/{url.id}
             </ChackraLink>
 
             <ChackraLink href={url.url} display={"block"} target="_blank">
