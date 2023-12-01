@@ -3,8 +3,9 @@ import currentUser from "@/helpers/currentUser";
 import Pagination from "@/components/Pagination";
 import UrlList from "../../components/UrlList";
 import ShortenBar from "@/components/ShortenBar";
-import { Box } from "@chakra-ui/react";
+import { Card, CardBody } from "@chakra-ui/react";
 import prisma from "@/prisma";
+import Container from "@/components/Container";
 
 export default async function Home({
   searchParams,
@@ -34,16 +35,19 @@ export default async function Home({
   });
 
   return (
-    <>
-      <Box mt={4}>
-        <ShortenBar />
-      </Box>
+    <Container darkBackground>
+      <Card mt={4}>
+        <CardBody>
+          <ShortenBar />
+        </CardBody>
+      </Card>
+
       <UrlList urls={urls} />
       <Pagination
         baseUrl="/dashboard"
         pages={pages}
         currentPage={currentPage}
       />
-    </>
+    </Container>
   );
 }

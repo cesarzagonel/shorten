@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import ConfirmForm from "./ConfirmForm";
 import prisma from "@/prisma";
 
@@ -11,5 +12,9 @@ export default async function Confirm({
     include: { user: true },
   });
 
-  return <ConfirmForm id={otp.id} email={otp.user.email} />;
+  return (
+    <Container darkBackground>
+      <ConfirmForm id={otp.id} email={otp.user.email} />
+    </Container>
+  );
 }

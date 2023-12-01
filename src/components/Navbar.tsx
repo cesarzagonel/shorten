@@ -66,6 +66,7 @@ export default function Navbar({ user }: { user?: { id: number } | null }) {
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
+            fontWeight={"bold"}
           >
             Shortim
           </Text>

@@ -34,15 +34,7 @@ export default async function RootLayout({
               flexGrow={1}
               overflowX={"auto"}
             >
-              <Container
-                maxW={"5xl"}
-                display={"flex"}
-                flexGrow={1}
-                flexDirection={"column"}
-              >
-                {children}
-              </Container>
-
+              {children}
               <Box backgroundColor={"white"}>
                 <Box
                   display={"flex"}

@@ -4,7 +4,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Container,
   Heading,
   Link,
 } from "@chakra-ui/react";
@@ -15,6 +14,7 @@ import VisitsTable from "./VisitsTable";
 import VisitRepository from "@/repositories/VisitRepository";
 import currentUser from "@/helpers/currentUser";
 import { redirect } from "next/navigation";
+import Container from "@/components/Container";
 
 export default async function Details({
   params: { id },
@@ -56,8 +56,8 @@ export default async function Details({
   const visitsByCountry = await VisitRepository.visitsByCountryForUrl(id);
 
   return (
-    <Container pt={4}>
-      <Card>
+    <Container darkBackground>
+      <Card mt={4}>
         <CardHeader pb={0}>
           <Heading size="md">{url.title}</Heading>
         </CardHeader>
@@ -78,7 +78,7 @@ export default async function Details({
 
           <Box>Visits: {url._count.visits}</Box>
 
-          <Box h={200}>
+          <Box h={200} mt={4}>
             <VisitsChart
               data={[
                 {
@@ -89,7 +89,9 @@ export default async function Details({
             />
           </Box>
 
-          <VisitsTable data={visitsByCountry} />
+          <Box mt={4}>
+            <VisitsTable data={visitsByCountry} />
+          </Box>
         </CardBody>
       </Card>
     </Container>

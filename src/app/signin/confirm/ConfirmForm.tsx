@@ -5,10 +5,12 @@ import {
   Button,
   Card,
   CardBody,
+  CardHeader,
   CircularProgress,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Input,
   Stack,
   Text,
@@ -49,19 +51,22 @@ export default function ConfirmForm({
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <Card w={400}>
+      <Card w={500}>
+        <CardHeader>
+          <Heading size="md">Sign In / Sign Up</Heading>
+        </CardHeader>
+
         <CardBody>
           <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
             <Stack spacing={4}>
               <Text>
-                We sent a one time code to <strong>{email}</strong>, please put
-                it in the field below.
+                We sent a six digit code to <strong>{email}</strong>, enter the code on the field below:
               </Text>
 
               <FormControl isInvalid={Boolean(mutation.error)}>
-                <FormLabel>OTP</FormLabel>
+                <FormLabel>Code</FormLabel>
                 <Input
-                  type="text"
+                  type="number"
                   {...register("otp", {
                     required: true,
                   })}
