@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import currentUser from "@/helpers/currentUser";
 import Pagination from "@/components/Pagination";
 import UrlList from "../../components/UrlList";
+import ShortenBar from "@/components/ShortenBar";
+import { Box } from "@chakra-ui/react";
 
 export default async function Home({
   searchParams,
@@ -33,8 +35,15 @@ export default async function Home({
 
   return (
     <>
+      <Box mt={4}>
+        <ShortenBar />
+      </Box>
       <UrlList urls={urls} />
-      <Pagination baseUrl="/dashboard" pages={pages} currentPage={currentPage} />
+      <Pagination
+        baseUrl="/dashboard"
+        pages={pages}
+        currentPage={currentPage}
+      />
     </>
   );
 }
