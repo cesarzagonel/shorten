@@ -2,6 +2,7 @@ import HomeIllustration from "@/components/HomeIllustration";
 import ShortenBar from "@/components/ShortenBar";
 import UrlList from "@/components/UrlList";
 import currentUser from "@/helpers/currentUser";
+import prisma from "@/prisma";
 import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -45,8 +46,8 @@ export default async function Home() {
         </Text>
       </Heading>
       <Text color={"gray.500"} maxW={"3xl"} textAlign={"center"}>
-        Shorten and track with Shortim today! Experience the power
-        of seamless sharing and in-depth analytics. Get started now! 🚀
+        Shorten and track with Shortim today! Experience the power of seamless
+        sharing and in-depth analytics. Get started now! 🚀
       </Text>
 
       <ShortenBar />
