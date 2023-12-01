@@ -1,10 +1,10 @@
-import client from "../../prisma";
 import { redirect } from "next/navigation";
 import currentUser from "@/helpers/currentUser";
 import Pagination from "@/components/Pagination";
 import UrlList from "../../components/UrlList";
 import ShortenBar from "@/components/ShortenBar";
 import { Box } from "@chakra-ui/react";
+import prisma from "@/prisma";
 
 export default async function Home({
   searchParams,
@@ -18,11 +18,11 @@ export default async function Home({
     redirect("/signin");
   }
 
-  const urlCount = await client.url.count({ where: { userId: user.id } });
+  const urlCount = await prisma.url.count({ where: { userId: user.id } });
   const perPage = 10;
   const pages = Math.ceil(urlCount / perPage);
 
-  const urls = await client.url.findMany({
+  const urls = await prisma.url.findMany({
     where: { userId: user.id },
     take: perPage,
     skip: (currentPage - 1) * perPage,
