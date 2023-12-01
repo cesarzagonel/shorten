@@ -1,4 +1,5 @@
 import ConfirmForm from "./ConfirmForm";
+import prisma from "@/prisma";
 
 export default async function Confirm({
   searchParams: { id },
