@@ -13,13 +13,13 @@ import {
 
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { shorten } from "@/server/shorten";
 
 export default function ShortenBar({ showLabel }: { showLabel?: boolean }) {
-  const router = useRouter();
+  const pathname = usePathname();
   const [url, setUrl] = useState("");
-  const shortenMutation = useMutation(shorten);
+  const shortenMutation = useMutation((url: string) => shorten(url, pathname));
 
   return (
     <FormControl isInvalid={Boolean(shortenMutation.data?.errors?.url)}>
@@ -41,7 +41,6 @@ export default function ShortenBar({ showLabel }: { showLabel?: boolean }) {
           onClick={async () => {
             await shortenMutation.mutateAsync(url);
             setUrl("");
-            router.refresh();
           }}
         >
           {shortenMutation.isLoading ? (

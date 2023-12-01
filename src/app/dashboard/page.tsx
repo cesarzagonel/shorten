@@ -32,6 +32,9 @@ export default async function Home({
         select: { visits: true },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import { inferAsyncReturnType } from "@/helpers/types";
 import {
   CardHeader,
   CardBody,
@@ -8,21 +9,22 @@ import {
   Stack,
   Link as ChackraLink,
   Card,
+  Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import prisma from "@/prisma";
 
 export default function UrlList({
   urls,
 }: {
-  urls: {
-    id: string;
-    title: string;
-    url: string;
-    _count: { visits: number };
-  }[];
+  urls: inferAsyncReturnType<
+    typeof prisma.url.findMany<{
+      include: { _count: { select: { visits: boolean } } };
+    }>
+  >;
 }) {
   return (
-    <Stack mt={4} spacing={4} w={'100%'}>
+    <Stack mt={4} spacing={4} w={"100%"}>
       {urls.map((url) => (
         <Card key={url.id}>
           <CardHeader pb={0}>
@@ -31,7 +33,7 @@ export default function UrlList({
             </Heading>
           </CardHeader>
 
-          <CardBody pt={2}>
+          <CardBody pt={2} pb={2}>
             <ChackraLink
               href={`${process.env.NEXT_PUBLIC_BASE_URL}/${url.id}`}
               display={"block"}
@@ -46,6 +48,11 @@ export default function UrlList({
             </ChackraLink>
 
             <Box>Visits: {url._count.visits}</Box>
+
+            <Text textAlign={"right"} fontSize={14} color={"gray.600"}>
+              {url.createdAt.toLocaleDateString()} at{" "}
+              {url.createdAt.toLocaleTimeString()}
+            </Text>
           </CardBody>
         </Card>
       ))}
