@@ -54,7 +54,7 @@ export default function Login() {
           <CardBody>
             <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
               <Stack spacing={4}>
-                <Text>Fill with your best e-mail.</Text>
+                <Text>Provide your best e-mail.</Text>
 
                 <FormControl isInvalid={Boolean(mutation.error)}>
                   <FormLabel>E-mail</FormLabel>

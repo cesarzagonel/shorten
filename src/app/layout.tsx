@@ -23,7 +23,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en" style={{ height: "100%" }}>
-      <body className={inter.className} style={{ height: '100%', display: "flex" }}>
+      <body
+        className={inter.className}
+        style={{ height: "100%", display: "flex" }}
+      >
         <Providers>
           <Box display={"flex"} flexDirection={"column"} flexGrow={1}>
             <Navbar user={user} />

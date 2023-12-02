@@ -21,7 +21,6 @@ export default function Pagination({
 
   return (
     <HStack
-      mt={4}
       mb={4}
       display={"flex"}
       flexDirection={"row"}

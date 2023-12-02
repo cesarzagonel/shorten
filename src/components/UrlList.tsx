@@ -24,7 +24,7 @@ export default function UrlList({
   >;
 }) {
   return (
-    <Stack mt={4} spacing={4} w={"100%"}>
+    <Stack mt={4} mb={4} spacing={4} w={"100%"}>
       {urls.map((url) => (
         <Card key={url.id}>
           <CardHeader pb={0}>

@@ -78,20 +78,28 @@ export default async function Details({
 
           <Box>Visits: {url._count.visits}</Box>
 
-          <Box h={200} mt={4}>
-            <VisitsChart
-              data={[
-                {
-                  label: "Visits",
-                  data: timeseries,
-                },
-              ]}
-            />
-          </Box>
+          {url._count.visits ? (
+            <>
+              <Box h={200} mt={4}>
+                <VisitsChart
+                  data={[
+                    {
+                      label: "Visits",
+                      data: timeseries,
+                    },
+                  ]}
+                />
+              </Box>
 
-          <Box mt={4}>
-            <VisitsTable data={visitsByCountry} />
-          </Box>
+              <Box mt={4}>
+                <VisitsTable data={visitsByCountry} />
+              </Box>
+            </>
+          ) : (
+            <Box textAlign="center" fontWeight="bold" pt={2}>
+              No data
+            </Box>
+          )}
         </CardBody>
       </Card>
     </Container>

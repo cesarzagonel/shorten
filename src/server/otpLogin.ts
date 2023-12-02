@@ -6,6 +6,7 @@ import prisma from "../prisma";
 import ipRateLimit from "@/helpers/ipRateLimit";
 import rateLimit from "@/helpers/rateLimit";
 import { MINUTE_S } from "@/helpers/time";
+import { addDays } from "date-fns";
 
 export const otpLogin = ipRateLimit(
   "otp_login",
@@ -51,7 +52,11 @@ export const otpLogin = ipRateLimit(
           where: { id },
         });
 
-        cookies().set("token", token);
+        cookies().set("token", token, {
+          secure: true,
+          httpOnly: true,
+          expires: addDays(new Date(), 30),
+        });
 
         return {};
       });
