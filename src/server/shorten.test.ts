@@ -1,7 +1,15 @@
+import "core-js/actual/set-immediate";
 import { shorten } from "./shorten";
 import sessionId from "@/helpers/sessionId";
 import currentUser from "@/helpers/currentUser";
 import { inferAsyncReturnType } from "@/helpers/types";
+import prisma from "@/prisma";
+
+jest.mock("../helpers/rateLimit", () =>
+  jest.fn().mockImplementation((expire, limit, getKey, fn) => {
+    return fn;
+  })
+);
 
 jest.mock("../helpers/currentUser");
 jest.mock("../helpers/sessionId");
