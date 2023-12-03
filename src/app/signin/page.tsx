@@ -17,7 +17,7 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useRouter } from "next/navigation";
-import { otpRequest } from "@/server/otpRequest";
+import otpRequest from "@/server/otpRequest";
 import Container from "@/components/Container";
 
 interface LoginForm {

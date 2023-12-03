@@ -2,20 +2,19 @@
 
 import { nanoid } from "nanoid";
 import { ZodError, z } from "zod";
-import prisma from "../prisma";
+import { revalidatePath } from "next/cache";
+import prisma from "@/prisma";
 import sessionId from "@/helpers/sessionId";
 import currentUser from "@/helpers/currentUser";
 import ipRateLimit from "@/helpers/ipRateLimit";
-import { revalidatePath } from "next/cache";
 
 const schema = z.object({
   url: z.string({ required_error: "Url is required." }).min(1),
   title: z.string(),
 });
 
-export const shorten = ipRateLimit(
-  "shorten",
-  async (url: string, revalidate?: string) => {
+export default async function shorte(url: string, revalidate?: string) {
+  return await ipRateLimit("shorten", async () => {
     const user = await currentUser();
     const session = user ? null : sessionId();
 
@@ -52,5 +51,5 @@ export const shorten = ipRateLimit(
     }
 
     return {};
-  }
-);
+  });
+}

@@ -3,12 +3,11 @@ import { redirect } from "next/navigation";
 import prisma from "../../prisma";
 import ipRateLimit from "@/helpers/ipRateLimit";
 
-export const GET = ipRateLimit(
-  "redirect",
-  async (
-    request: NextRequest,
-    { params: { id } }: { params: { id: string } }
-  ) => {
+export default async function GET(
+  request: NextRequest,
+  { params: { id } }: { params: { id: string } }
+) {
+  return await ipRateLimit("url-redirect", async () => {
     const ip =
       request.headers.get("x-forwarded-for")?.split(",").shift() || "::1";
 
@@ -30,5 +29,5 @@ export const GET = ipRateLimit(
     }
 
     redirect(url.url);
-  }
-);
+  });
+}
