@@ -18,7 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { otpLogin } from "@/server/otpLogin";
+import otpLogin from "@/server/otpLogin";
 
 interface ConfirmForm {
   otp: string;

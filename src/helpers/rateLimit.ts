@@ -1,25 +1,22 @@
 import getRedis from "@/redis";
 
-export default function rateLimit<T, A extends unknown[]>(
+export default async function rateLimit<T>(
   expire: number,
   limit: number,
-  getKey: (...args: A) => string,
-  fn: (...args: A) => Promise<T>,
+  key: string,
+  fn: () => T,
   message: string = "Too many requests. Please try again later."
-): (...args: A) => Promise<T> {
-  return async function (...args) {
-    const redis = await getRedis();
-    const key = getKey.apply(null, args);
-    const count = await redis.incr(key);
+): Promise<T> {
+  const redis = await getRedis();
+  const count = await redis.incr(key);
 
-    if (count == 1) {
-      redis.expire(key, expire);
-    }
+  if (count == 1) {
+    redis.expire(key, expire);
+  }
 
-    if (count > limit) {
-      throw new Error(message);
-    }
+  if (count > limit) {
+    throw new Error(message);
+  }
 
-    return await fn.apply(null, args);
-  };
+  return fn();
 }

@@ -1,17 +1,15 @@
 import { headers } from "next/headers";
-import rateLimit from "@/helpers/rateLimit";
 import { MINUTE_S } from "./time";
+import rateLimit from "@/helpers/rateLimit";
 
-const ipRateLimit = <T, A extends unknown[]>(
+export default async function ipRateLimit<T>(
   key: string,
-  fn: (...args: A) => Promise<T>
-) =>
-  rateLimit(
+  fn: () => Promise<T>
+): Promise<T> {
+  return await rateLimit(
     MINUTE_S,
     120,
-    (..._args: A) =>
-      key + "_" + headers().get("x-forwarded-for")?.split(",").shift() || "::1",
+    key + "-" + headers().get("x-forwarded-for")?.split(",").shift() || "::1",
     fn
   );
-
-export default ipRateLimit;
+}

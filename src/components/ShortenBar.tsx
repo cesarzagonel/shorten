@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { usePathname } from "next/navigation";
-import { shorten } from "@/server/shorten";
+import shorten from "@/server/shorten";
 
 export default function ShortenBar({ showLabel }: { showLabel?: boolean }) {
   const pathname = usePathname();
