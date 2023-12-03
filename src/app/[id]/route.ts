@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import prisma from "../../prisma";
 import ipRateLimit from "@/helpers/ipRateLimit";
 
-export default async function GET(
+export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } }
 ) {
