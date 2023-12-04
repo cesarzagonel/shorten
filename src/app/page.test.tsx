@@ -1,4 +1,4 @@
-import "@/test/dbTestCase";
+import "@/test/serverTestCase";
 import "@testing-library/jest-dom";
 
 import { ReactNode } from "react";
@@ -8,9 +8,9 @@ import Home from "./page";
 import prisma from "@/prisma";
 import UrlList from "@/components/UrlList";
 import { renderServerComponent } from "@/test/renderServerComponent";
+import { cookies } from "next/headers";
 
 jest.mock("../helpers/currentUser");
-jest.mock("../helpers/sessionId");
 jest.mock("../components/UrlList");
 
 const client = new QueryClient();
@@ -27,6 +27,7 @@ it("should render", async () => {
 
 it("should render session urls", async () => {
   const session = "session-a";
+  cookies().set("session", session);
 
   const url = await prisma.url.create({
     data: {
