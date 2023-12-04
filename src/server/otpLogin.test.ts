@@ -1,20 +1,14 @@
-import "@/test/actionTestCase";
+import "@/test/serverTestCase";
 
 import crypto from "crypto";
 import { addMinutes } from "date-fns";
-import { cookies } from "next/headers";
 import prisma from "@/prisma";
 import otpLogin from "./otpLogin";
+import { cookies } from "next/headers";
 
 jest.mock("next/headers");
 
 it("should login using otp", async () => {
-  const set = jest.fn();
-  (cookies as jest.Mock).mockImplementation(() => ({
-    get: jest.fn(),
-    set: set,
-  }));
-
   let user = await prisma.user.create({
     data: {
       email: "test@mail.com",
@@ -34,7 +28,7 @@ it("should login using otp", async () => {
 
   user = await prisma.user.findFirstOrThrow({ where: { id: user.id } });
 
-  expect(set).toHaveBeenCalledWith("token", user.token, {
+  expect(cookies().set).toHaveBeenCalledWith("token", user.token, {
     expires: expect.any(Date),
     httpOnly: true,
     secure: true,

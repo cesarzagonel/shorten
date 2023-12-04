@@ -1,4 +1,4 @@
-import "@/test/actionTestCase";
+import "@/test/serverTestCase";
 
 import prisma from "@/prisma";
 import shorten from "./shorten";

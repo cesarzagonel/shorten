@@ -1,4 +1,4 @@
-import "@/test/actionTestCase";
+import "@/test/serverTestCase";
 
 import otpRequest from "./otpRequest";
 import Mailer from "@/services/mailer";
