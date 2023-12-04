@@ -3,9 +3,9 @@ import HomeIllustration from "@/components/HomeIllustration";
 import ShortenBar from "@/components/ShortenBar";
 import UrlList from "@/components/UrlList";
 import currentUser from "@/helpers/currentUser";
+import sessionId from "@/helpers/sessionId";
 import prisma from "@/prisma";
 import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -16,19 +16,17 @@ export default async function Home() {
     redirect("/dashboard");
   }
 
-  const session = cookies().get("session")?.value;
-  const urls =
-    session &&
-    (await prisma.url.findMany({
-      where: {
-        session,
+  const session = sessionId();
+  const urls = await prisma.url.findMany({
+    where: {
+      session,
+    },
+    include: {
+      _count: {
+        select: { visits: true },
       },
-      include: {
-        _count: {
-          select: { visits: true },
-        },
-      },
-    }));
+    },
+  });
 
   return (
     <Container>
