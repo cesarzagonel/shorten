@@ -28,7 +28,7 @@ export default function UrlList({
       {urls.map((url) => (
         <Card key={url.id}>
           <CardHeader pb={0}>
-            <Heading size="md" as={Link} href={`/details/${url.id}`}>
+            <Heading size="md" as={Link} href={`/dashboard/details/${url.id}`}>
               {url.title}
             </Heading>
           </CardHeader>

@@ -24,7 +24,7 @@ export default async function Details({
   const user = await currentUser();
 
   if (!user) {
-    redirect("/signin");
+    redirect("/dashboard/signin");
   }
 
   const url = await prisma.url.findFirstOrThrow({

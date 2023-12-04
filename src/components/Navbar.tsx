@@ -65,7 +65,7 @@ export default function Navbar({ user }: { user?: { id: number } | null }) {
                 </MenuButton>
 
                 <MenuList>
-                  <MenuItem as={"a"} href="/signout" color={"red.400"}>
+                  <MenuItem as={"a"} href="/dashboard/signout" color={"red.400"}>
                     Sign out
                   </MenuItem>
                 </MenuList>
@@ -78,7 +78,7 @@ export default function Navbar({ user }: { user?: { id: number } | null }) {
                 fontSize={"sm"}
                 fontWeight={400}
                 variant={"link"}
-                href={"/signin"}
+                href={"/dashboard/signin"}
               >
                 Sign In / Sign Up
               </Button>

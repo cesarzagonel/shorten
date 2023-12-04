@@ -16,7 +16,7 @@ export default async function Home({
 
   const user = await currentUser();
   if (!user) {
-    redirect("/signin");
+    redirect("/dashboard/signin");
   }
 
   const urlCount = await prisma.url.count({ where: { userId: user.id } });
