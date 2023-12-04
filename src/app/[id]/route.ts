@@ -11,9 +11,13 @@ export async function GET(
     const ip =
       request.headers.get("x-forwarded-for")?.split(",").shift() || "::1";
 
-    const url = await prisma.url.findFirstOrThrow({
+    const url = await prisma.url.findFirst({
       where: { id },
     });
+
+    if (!url) {
+      redirect("/");
+    }
 
     const visit = await prisma.visit.create({
       data: {

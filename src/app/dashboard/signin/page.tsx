@@ -32,7 +32,7 @@ export default function Login() {
     const result = await otpRequest(data.email);
 
     if ("id" in result) {
-      router.push(`/signin/confirm?id=${result.id}`);
+      router.push(`/dashboard/signin/confirm?id=${result.id}`);
     }
 
     return result;
